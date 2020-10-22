@@ -25,5 +25,8 @@ describe("CreateWallet", () => {
       await fireEvent.click(await result.getByTestId(dataTestIds.createWalletButton));
     });
     expect(nftSmartWalletAuthorityFn.mock.calls.length).toEqual(1);
+
+    // OMG THIS WORKS?
+    expect(await result.getByTestId(dataTestIds.walletAddress)).toHaveTextContent("Created Wallet Address: 1");
   });
 });

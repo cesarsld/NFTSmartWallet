@@ -8,6 +8,7 @@ export const componentDataTestId = createDataTestId("CreateWallet");
 
 export const dataTestIds = {
   createWalletButton: componentDataTestId("createWallet", "button"),
+  walletAddress: componentDataTestId("walletAddress", "text"),
 };
 
 interface IProps {
@@ -23,7 +24,9 @@ const CreateWallet: React.FunctionComponent<IProps> = (props) => {
       <Button data-testid={dataTestIds.createWalletButton} onClick={createWallet}>
         Create Wallet
       </Button>
-      {walletAddress !== "" && <Text>Created Wallet Address: {walletAddress}</Text>}
+      {walletAddress !== "" && (
+        <Text data-testid={dataTestIds.walletAddress}>Created Wallet Address: {walletAddress}</Text>
+      )}
     </Flex>
   );
 };
