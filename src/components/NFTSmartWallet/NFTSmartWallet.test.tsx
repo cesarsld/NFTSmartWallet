@@ -7,20 +7,16 @@ describe("NFTSmartWallet", () => {
   it.skip("should show tokens owned by the smart wallet", async () => {});
 
   it("should be able deposit a nft", async () => {
+    const depositNFT = jest.fn();
+    const depositToken = jest.fn();
     const depositNFTFn = jest.fn(() => ({
       callStatic: {
-        depositNFT: () => Promise.resolve(),
-        depositToken: () => Promise.resolve(),
+        depositNFT,
+        depositToken,
       },
     }));
     const nftSmartWalletMvp = depositNFTFn();
-    const depositNFT = jest.fn(() => {
-      nftSmartWalletMvp.callStatic.depositNFT();
-    });
 
-    const depositToken = jest.fn(() => {
-      nftSmartWalletMvp.callStatic.depositToken();
-    });
     const useDeposit = jest.fn(() => ({
       walletAddress: "",
       depositNFT,
@@ -29,11 +25,16 @@ describe("NFTSmartWallet", () => {
     const result = render(
       <NFTSmartWallet nftSmartWalletMvp={nftSmartWalletMvp as any} useDeposit={useDeposit as any} />
     );
+    expect(await result.getByTestId(dataTestIds.nftInput)).toBeInTheDocument();
+    expect(await result.getByTestId(dataTestIds.tokenIdInput)).toBeInTheDocument();
     expect(await result.getByTestId(dataTestIds.depositNFTButton)).toHaveTextContent("Deposit NFT");
     await act(async () => {
+      await fireEvent.change(await result.getByTestId(dataTestIds.nftInput), { target: { value: "0x0" } });
+      await fireEvent.change(await result.getByTestId(dataTestIds.tokenIdInput), { target: { value: "0x1" } });
       await fireEvent.click(await result.getByTestId(dataTestIds.depositNFTButton));
     });
     expect(depositNFTFn.mock.calls.length).toEqual(1);
+    expect(depositNFT.mock.calls[0]).toEqual(["0x0", "0x1"]);
     // NOTE - No event emitted for deposit...
     // Hard to get all nfts owned by the smart wallet too
   });
