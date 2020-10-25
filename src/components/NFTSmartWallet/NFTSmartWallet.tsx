@@ -6,6 +6,7 @@ import { createDataTestId } from "../../lib/create-data-testid";
 import { NftSmartWalletMvp } from "../../types/NftSmartWalletMvp";
 import { useDeposit } from "./useDeposit/useDeposit";
 import { useNFTAgreement } from "./useNFTAgreement/useNFTAgreement";
+import { ProposeNFTAgreementForm } from "./ProposeNFTAgreementForm/ProposeNFTAgreementForm";
 
 export const componentDataTestId = createDataTestId("NFTSmartWallet");
 
@@ -136,6 +137,7 @@ const NFTSmartWallet: React.FunctionComponent<IProps> = (props) => {
     <Stack spacing={1}>
       <DepositTokenForm depositToken={depositToken}></DepositTokenForm>
       <DepositNFTForm depositNFT={depositNFT}></DepositNFTForm>
+      <ProposeNFTAgreementForm nftSmartWalletMvp={nftSmartWalletMvp}></ProposeNFTAgreementForm>
     </Stack>
   );
 };

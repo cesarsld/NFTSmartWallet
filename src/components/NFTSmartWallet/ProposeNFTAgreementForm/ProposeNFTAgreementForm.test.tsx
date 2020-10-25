@@ -10,13 +10,7 @@ it("should propose a nft agreement", async () => {
     },
   }));
   const nftSmartWalletMvp = nftSmartWalletMvpFn();
-  const useNFTAgreement = jest.fn(() => ({
-    walletAddress: "",
-    proposeNFTAgreement,
-  }));
-  const result = render(
-    <ProposeNFTAgreementForm nftSmartWalletMvp={nftSmartWalletMvp as any} useNFTAgreement={useNFTAgreement as any} />
-  );
+  const result = render(<ProposeNFTAgreementForm nftSmartWalletMvp={nftSmartWalletMvp as any} />);
   expect(await result.getByTestId(dataTestIds.proposeNFTAgreementButton)).toHaveTextContent("Propose NFT Agreement");
   await act(async () => {
     await fireEvent.change(await result.getByTestId(dataTestIds.nftInput), { target: { value: "0x0" } });
