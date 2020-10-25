@@ -1,6 +1,8 @@
 import React from "react";
 import { act, fireEvent, render } from "../../lib/test-utils";
 import { NFTSmartWallet, dataTestIds } from "./NFTSmartWallet";
+import { useDeposit } from "./useDeposit/useDeposit";
+import { useNFTAgreement } from "./useNFTAgreement/useNFTAgreement";
 
 describe("NFTSmartWallet", () => {
   it.skip("should show nfts owned by the smart wallet", async () => {});
@@ -23,7 +25,11 @@ describe("NFTSmartWallet", () => {
       depositToken,
     }));
     const result = render(
-      <NFTSmartWallet nftSmartWalletMvp={nftSmartWalletMvp as any} useDeposit={useDeposit as any} />
+      <NFTSmartWallet
+        nftSmartWalletMvp={nftSmartWalletMvp as any}
+        useDeposit={useDeposit as any}
+        useNFTAgreement={useNFTAgreement}
+      />
     );
     expect(await result.getByTestId(dataTestIds.nftInput)).toBeInTheDocument();
     expect(await result.getByTestId(dataTestIds.tokenIdInput)).toBeInTheDocument();
@@ -55,7 +61,11 @@ describe("NFTSmartWallet", () => {
       depositToken,
     }));
     const result = render(
-      <NFTSmartWallet nftSmartWalletMvp={nftSmartWalletMvp as any} useDeposit={useDeposit as any} />
+      <NFTSmartWallet
+        nftSmartWalletMvp={nftSmartWalletMvp as any}
+        useDeposit={useDeposit as any}
+        useNFTAgreement={useNFTAgreement}
+      />
     );
     expect(await result.getByTestId(dataTestIds.depositTokenButton)).toHaveTextContent("Deposit Token");
     await act(async () => {

@@ -1,10 +1,11 @@
 import React from "react";
 import { useFormik } from "formik";
-import { createDataTestId } from "../../lib/create-data-testid";
+import { BigNumberish } from "ethers";
 import { Flex, Stack, Text, Button, FormControl, FormLabel, Input } from "@chakra-ui/core";
+import { createDataTestId } from "../../lib/create-data-testid";
 import { NftSmartWalletMvp } from "../../types/NftSmartWalletMvp";
 import { useDeposit } from "./useDeposit/useDeposit";
-import { BigNumberish } from "ethers";
+import { useNFTAgreement } from "./useNFTAgreement/useNFTAgreement";
 
 export const componentDataTestId = createDataTestId("NFTSmartWallet");
 
@@ -122,12 +123,13 @@ const DepositNFTForm: React.FC<IDepositNFTFormProps> = (props) => {
 interface IProps {
   nftSmartWalletMvp: NftSmartWalletMvp;
   useDeposit: typeof useDeposit;
+  useNFTAgreement: typeof useNFTAgreement;
   // useWithdraw: typeof useWithdraw,
-  // useAgreement: typeof useAgreement
 }
 
 const NFTSmartWallet: React.FunctionComponent<IProps> = (props) => {
-  const { useDeposit, nftSmartWalletMvp } = props;
+  const { useDeposit, useNFTAgreement, nftSmartWalletMvp } = props;
+  const { proposeNFTAgreement } = useNFTAgreement(nftSmartWalletMvp);
   const { depositNFT, depositToken } = useDeposit(nftSmartWalletMvp);
 
   return (
