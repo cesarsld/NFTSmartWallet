@@ -23,4 +23,20 @@ describe("useNFTAgreement", () => {
     expect(proposeNFTAgreement.mock.calls[0]).toEqual(["0x0", "0x1", "0x2", "1994-06-13"]);
     expect(nftSmartWalletMvp.mock.calls.length).toEqual(1);
   });
+
+  it("should be able to approve a NFT agreement from a lender", async () => {
+    const approveNFTAgreement = jest.fn((_lender: string, _nft: string, _tokenId: BigNumberish) => Promise.resolve());
+
+    const nftSmartWalletMvp = jest.fn(() => ({
+      callStatic: {
+        approveNFTAgreement,
+      },
+    }));
+    const { result, waitForNextUpdate } = renderHook(() => useNFTAgreement(nftSmartWalletMvp() as any));
+    await act(async () => {
+      await result.current.approveNFTAgreement("0x0", "0x1", "0x2");
+    });
+    expect(approveNFTAgreement.mock.calls[0]).toEqual(["0x0", "0x1", "0x2"]);
+    expect(nftSmartWalletMvp.mock.calls.length).toEqual(1);
+  });
 });
