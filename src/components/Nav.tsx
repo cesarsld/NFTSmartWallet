@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef } from "react";
+import React, { Fragment, useContext, useEffect, useRef } from "react";
 import {
   Button,
   Heading,
@@ -21,6 +21,7 @@ import Web3Modal from "web3modal";
 import { truncateEtherValue } from "../lib/truncate-ether-value";
 import { NftSmartWalletAuthorityFactory, NftSmartWalletMvpFactory } from "../types";
 import { formatEther } from "ethers/lib/utils";
+import { Web3Context } from "../lib/useWeb3/useWeb3";
 
 const MenuItems: React.FC<{ href: string }> = ({ children, href }) => (
   <NextLink href={href}>
@@ -31,7 +32,14 @@ const MenuItems: React.FC<{ href: string }> = ({ children, href }) => (
 );
 
 const handleWeb3Click = async (params: any) => {
-  const { setIsConnected, setProvider, setEthBalance, setAddress } = params;
+  const {
+    setIsConnected,
+    setProvider,
+    setEthBalance,
+    setAddress,
+    setNftSmartWalletMvp,
+    setNftSmartWalletAuthority,
+  } = params;
   const providerOptions = {
     walletconnect: {
       package: WalletConnectProvider, // required
@@ -41,7 +49,7 @@ const handleWeb3Click = async (params: any) => {
     },
   };
   const web3Modal = new Web3Modal({
-    network: "mainnet", // optional
+    network: "rinkeby", // optional
     cacheProvider: true, // optional
     providerOptions, // required
   });
@@ -52,21 +60,22 @@ const handleWeb3Click = async (params: any) => {
   const address = await signer.getAddress();
   const ethBalance = await signer.getBalance();
 
-  // const nftSmartWalletMvp = await new NftSmartWalletMvpFactory(signer).deploy("", "", "");
+  const nftSmartWalletAuthorityAddress = "0xa0a55d607d442e7acc22c541389c13a551f27266";
+  const lendingRegistryAddress = "0xaa0f11b3013849bf69c9bbd3e866511fe1793b69";
+  const nftSmartWalletAuthority = await NftSmartWalletAuthorityFactory.connect(nftSmartWalletAuthorityAddress, signer);
 
   setProvider(web3Provider);
   setEthBalance(ethBalance);
   setAddress(address);
+  setNftSmartWalletAuthority(nftSmartWalletAuthority);
   setIsConnected(true);
 };
 
 const Nav: React.FC<any> = (props) => {
-  const { provider, setProvider } = props;
   const [show, setShow] = React.useState(false);
   const theme = useTheme();
   const [isConnected, setIsConnected] = React.useState<boolean>(false);
-  const [ethBalance, setEthBalance] = React.useState<number>(0);
-  const [address, setAddress] = React.useState("");
+  const { provider, signer, address, ethBalance, nftSmartWalletMvp, nftSmartWalletAuthority } = useContext(Web3Context);
 
   return (
     <Flex
@@ -94,7 +103,7 @@ const Nav: React.FC<any> = (props) => {
         {isConnected ? (
           <Flex ml="auto" flexDirection="row">
             <Text>Address: {address}</Text>
-            <Text>Eth Balance: {formatEther(ethBalance)}</Text>
+            <Text>Eth Balance: {formatEther(ethBalance[0])}</Text>
           </Flex>
         ) : (
           <Button
@@ -105,9 +114,10 @@ const Nav: React.FC<any> = (props) => {
             onClick={() => {
               handleWeb3Click({
                 setIsConnected,
-                setProvider,
-                setEthBalance,
-                setAddress,
+                setProvider: provider[1],
+                setEthBalance: ethBalance[1],
+                setAddress: address[1],
+                setNftSmartWalletAuthority: nftSmartWalletAuthority[1],
               });
             }}
           >

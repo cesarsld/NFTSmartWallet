@@ -16,9 +16,7 @@ export const dataTestIds = {
   proposeNFTAgreementButton: componentDataTestId("proposeNFTAgreement", "button"),
 };
 
-interface IProposeNFTAgreementFormProps {
-  nftSmartWalletMvp: NftSmartWalletMvp;
-}
+interface IProposeNFTAgreementFormProps {}
 
 interface IProposeNFTAgreementFormValues {
   _nft: string;
@@ -27,7 +25,7 @@ interface IProposeNFTAgreementFormValues {
   _endDate: BigNumberish;
 }
 const ProposeNFTAgreementForm: React.FC<IProposeNFTAgreementFormProps> = (props) => {
-  const { proposeNFTAgreement } = useNFTAgreement(props.nftSmartWalletMvp);
+  const { proposeNFTAgreement } = useNFTAgreement();
   const formik = useFormik<IProposeNFTAgreementFormValues>({
     initialValues: {
       _nft: "",

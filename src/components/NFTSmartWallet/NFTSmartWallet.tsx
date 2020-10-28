@@ -7,6 +7,7 @@ import { NftSmartWalletMvp } from "../../types/NftSmartWalletMvp";
 import { useDeposit } from "./useDeposit/useDeposit";
 import { useNFTAgreement } from "./useNFTAgreement/useNFTAgreement";
 import { ProposeNFTAgreementForm } from "./ProposeNFTAgreementForm/ProposeNFTAgreementForm";
+import { ApproveNFTAgreementForm } from "./ApproveNFTAgreementForm/ApproveNFTAgreementForm";
 
 export const componentDataTestId = createDataTestId("NFTSmartWallet");
 
@@ -122,22 +123,19 @@ const DepositNFTForm: React.FC<IDepositNFTFormProps> = (props) => {
 };
 
 interface IProps {
-  nftSmartWalletMvp: NftSmartWalletMvp;
-  useDeposit: typeof useDeposit;
-  useNFTAgreement: typeof useNFTAgreement;
-  // useWithdraw: typeof useWithdraw,
+  walletAddress: string;
 }
 
 const NFTSmartWallet: React.FunctionComponent<IProps> = (props) => {
-  const { useDeposit, useNFTAgreement, nftSmartWalletMvp } = props;
-  const { proposeNFTAgreement } = useNFTAgreement(nftSmartWalletMvp);
-  const { depositNFT, depositToken } = useDeposit(nftSmartWalletMvp);
+  const { proposeNFTAgreement } = useNFTAgreement();
+  const { depositNFT, depositToken } = useDeposit();
 
   return (
     <Stack spacing={1}>
       <DepositTokenForm depositToken={depositToken}></DepositTokenForm>
       <DepositNFTForm depositNFT={depositNFT}></DepositNFTForm>
-      <ProposeNFTAgreementForm nftSmartWalletMvp={nftSmartWalletMvp}></ProposeNFTAgreementForm>
+      <ProposeNFTAgreementForm></ProposeNFTAgreementForm>
+      <ApproveNFTAgreementForm></ApproveNFTAgreementForm>
     </Stack>
   );
 };
