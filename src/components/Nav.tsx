@@ -63,11 +63,17 @@ const handleWeb3Click = async (params: any) => {
   const nftSmartWalletAuthorityAddress = "0xa0a55d607d442e7acc22c541389c13a551f27266";
   const lendingRegistryAddress = "0xaa0f11b3013849bf69c9bbd3e866511fe1793b69";
   const nftSmartWalletAuthority = await NftSmartWalletAuthorityFactory.connect(nftSmartWalletAuthorityAddress, signer);
+  console.log(window.location.href.split("/")[1]);
+  const walletAddress = window.location.pathname.split("/")[window.location.pathname.split("/").length - 1];
+  const nftSmartWalletMvp = await NftSmartWalletMvpFactory.connect(walletAddress, signer);
+  console.log(nftSmartWalletAuthority);
+  console.log(nftSmartWalletMvp);
 
   setProvider(web3Provider);
   setEthBalance(ethBalance);
   setAddress(address);
   setNftSmartWalletAuthority(nftSmartWalletAuthority);
+  setNftSmartWalletMvp(nftSmartWalletMvp);
   setIsConnected(true);
 };
 
@@ -102,7 +108,7 @@ const Nav: React.FC<any> = (props) => {
 
         {isConnected ? (
           <Flex ml="auto" flexDirection="row">
-            <Text>Address: {address}</Text>
+            <Text>Address: {address[0]}</Text>
             <Text>Eth Balance: {formatEther(ethBalance[0])}</Text>
           </Flex>
         ) : (
@@ -118,6 +124,7 @@ const Nav: React.FC<any> = (props) => {
                 setEthBalance: ethBalance[1],
                 setAddress: address[1],
                 setNftSmartWalletAuthority: nftSmartWalletAuthority[1],
+                setNftSmartWalletMvp: nftSmartWalletMvp[1],
               });
             }}
           >

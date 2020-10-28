@@ -4,6 +4,6 @@ import { NftSmartWalletMvp } from "../../../types";
 
 export const useNFTAgreement = () => {
   const { nftSmartWalletMvp } = useContext(Web3Context);
-  const { proposeNFTAgreement, approveNFTAgreement } = nftSmartWalletMvp[0].callStatic;
-  return { proposeNFTAgreement, approveNFTAgreement };
+  const mvp = nftSmartWalletMvp?.[0];
+  return { proposeNFTAgreement: mvp?.proposeNFTAgreement, approveNFTAgreement: mvp?.approveNFTAgreement };
 };

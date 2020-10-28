@@ -12,6 +12,7 @@ export const useCreateWallet = () => {
     };
     handle();
     return () => {};
-  }, [walletAddress]);
+  }, [walletAddress, nftSmartWalletAuthority[0]]);
+  // 0xEcca5a87430EA654F8052434160B80057EF52dA9
   return { walletAddress, createWallet };
 };
