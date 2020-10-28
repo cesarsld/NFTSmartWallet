@@ -21,7 +21,7 @@ export const dataTestIds = {
 };
 
 interface IDepositTokenFormProps {
-  depositToken: NftSmartWalletMvp["callStatic"]["depositToken"];
+  depositToken: NftSmartWalletMvp["depositToken"];
 }
 
 interface IDepositTokenFormValues {
@@ -72,7 +72,7 @@ const DepositTokenForm: React.FC<IDepositTokenFormProps> = (props) => {
 };
 
 interface IDepositNFTFormProps {
-  depositNFT: NftSmartWalletMvp["callStatic"]["depositNFT"];
+  depositNFT: NftSmartWalletMvp["depositNFT"];
 }
 
 interface IDepositNFTFormValues {

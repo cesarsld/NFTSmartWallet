@@ -7,8 +7,8 @@ export const useCreateWallet = () => {
   const [walletAddress, setWalletAddress] = useState("");
   const createWallet = useCallback(() => {
     const handle = async () => {
-      const address = await nftSmartWalletAuthority[0].callStatic.createWallet();
-      setWalletAddress(address);
+      const address = await (await nftSmartWalletAuthority?.[0]?.createWallet()).wait();
+      // setWalletAddress(address);
     };
     handle();
     return () => {};

@@ -65,15 +65,17 @@ const handleWeb3Click = async (params: any) => {
   const nftSmartWalletAuthority = await NftSmartWalletAuthorityFactory.connect(nftSmartWalletAuthorityAddress, signer);
   console.log(window.location.href.split("/")[1]);
   const walletAddress = window.location.pathname.split("/")[window.location.pathname.split("/").length - 1];
-  const nftSmartWalletMvp = await NftSmartWalletMvpFactory.connect(walletAddress, signer);
+  if (walletAddress.includes("0x")) {
+    const nftSmartWalletMvp = await NftSmartWalletMvpFactory.connect(walletAddress, signer);
+    console.log(nftSmartWalletMvp);
+    setNftSmartWalletMvp(nftSmartWalletMvp);
+  }
   console.log(nftSmartWalletAuthority);
-  console.log(nftSmartWalletMvp);
 
   setProvider(web3Provider);
   setEthBalance(ethBalance);
   setAddress(address);
   setNftSmartWalletAuthority(nftSmartWalletAuthority);
-  setNftSmartWalletMvp(nftSmartWalletMvp);
   setIsConnected(true);
 };
 
